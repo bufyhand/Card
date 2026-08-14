@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Олег Клименко — AI-системы для реальных задач бизнеса</title>
+<meta name="description" content="Гендиректор «Планета ZOO». Проектирую AI-ассистентов, аналитику и рабочие процессы и проверяю их на задачах действующего бизнеса.">
+<meta property="og:title" content="Олег Клименко — от бизнес-задачи к работающей AI-системе">
+<meta property="og:description" content="AI-ассистенты, аналитика и автоматизация, проверенные на реальных управленческих процессах действующего бизнеса.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10181c;
+    --panel:#151f24;
+    --panel-2:#1b272d;
+    --line:rgba(226,236,238,0.12);
+    --paper:#e9eef0;
+    --paper-dim:#9fb2b8;
+    --accent:#5fd6c8;
+    --accent-dim:#3a8f85;
+    --amber:#e8b34f;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+
+  /* background schematic grid */
+  .grid-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity:0.5;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding-top:48px; padding-bottom:48px;
+  }
+  .tag-row{
+    display:flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em;
+    color:var(--accent); text-transform:uppercase; margin-bottom:28px;
+  }
+  .tag-dot{width:6px;height:6px;border-radius:50%;background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
+
+  .name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(34px, 6vw, 52px);
+    line-height:1.05;
+    margin:0 0 10px 0;
+    letter-spacing:-0.01em;
+  }
+  .role{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:var(--paper-dim);
+    margin:0 0 34px 0;
+  }
+  .role b{color:var(--paper); font-weight:500;}
+
+  .headline{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(21px, 3.4vw, 27px);
+    line-height:1.32;
+    max-width:600px;
+    margin:0 0 22px 0;
+    color:#fff;
+  }
+  .lede{
+    font-size:16px;
+    line-height:1.65;
+    color:var(--paper-dim);
+    max-width:560px;
+    margin:0 0 36px 0;
+  }
+
+  /* flow chip — signature element */
+  .flow{
+    display:flex; flex-wrap:wrap; align-items:center; gap:0;
+    margin-bottom:38px;
+  }
+  .flow-step{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--paper);
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:7px 12px;
+    border-radius:var(--radius);
+    white-space:nowrap;
+  }
+  .flow-arrow{
+    color:var(--accent-dim);
+    font-family:'IBM Plex Mono',monospace;
+    padding:0 8px;
+    font-size:13px;
+  }
+
+  .cta-box{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:var(--radius);
+    padding:20px 22px;
+    margin-bottom:34px;
+  }
+  .cta-box p{margin:0; font-size:15px; line-height:1.6; color:var(--paper);}
+  .cta-box b{color:var(--accent);}
+
+  .contacts{
+    display:flex; flex-wrap:wrap; gap:12px;
+  }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--accent);
+    padding:12px 20px;
+    border-radius:var(--radius);
+    font-weight:500;
+    transition:opacity .15s ease;
+  }
+  .btn:hover{opacity:.85;}
+  .btn.ghost{
+    background:transparent;
+    color:var(--paper);
+    border:1px solid var(--line);
+  }
+  .btn.ghost:hover{border-color:var(--accent); color:var(--accent); opacity:1;}
+
+  .scroll-hint{
+    margin-top:44px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--paper-dim);
+    display:flex; align-items:center; gap:8px;
+    opacity:.7;
+  }
+  .scroll-hint svg{animation:bob 1.8s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:52px 0; border-top:1px solid var(--line);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 16px 0;
+  }
+  h2.stitle{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(21px,3vw,26px);
+    font-weight:600; margin:0 0 20px 0; color:#fff;
+  }
+  .bio p{font-size:15.5px; line-height:1.75; color:var(--paper-dim); margin:0 0 14px 0;}
+
+  /* who to approach list */
+  .approach-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+  .approach-list li{
+    display:flex; gap:14px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    font-size:15px; line-height:1.6; color:var(--paper);
+  }
+  .approach-list li:first-child{border-top:none;}
+  .approach-list .num{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent-dim);
+    padding-top:2px; flex-shrink:0;
+  }
+
+  /* cases */
+  .case{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:var(--radius);
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .case-head{
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .case-head:hover{background:var(--panel-2);}
+  .case-title{font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:#fff;}
+  .case-idx{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--paper-dim); margin-right:12px;}
+  .case-toggle{
+    font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--accent);
+    transition:transform .25s ease; flex-shrink:0;
+  }
+  .case.open .case-toggle{transform:rotate(45deg);}
+  .case-body{
+    max-height:0; overflow:hidden;
+    transition:max-height .3s ease;
+    padding:0 20px;
+  }
+  .case.open .case-body{padding:0 20px 22px 20px;}
+  .case-flow{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent-dim);
+    line-height:1.9; margin:0 0 14px 0; padding:12px 14px;
+    background:rgba(95,214,200,0.05); border-left:2px solid var(--accent-dim);
+  }
+  .case-body p{font-size:14.5px; line-height:1.7; color:var(--paper-dim); margin:0 0 12px 0;}
+  .stat-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:1px; background:var(--line); margin:14px 0; border:1px solid var(--line);
+  }
+  .stat{background:var(--panel); padding:12px 14px;}
+  .stat b{display:block; font-family:'IBM Plex Mono',monospace; font-size:17px; color:var(--accent); font-weight:500;}
+  .stat span{font-size:11.5px; color:var(--paper-dim);}
+  .case-stage{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--amber);
+    margin-top:14px;
+  }
+
+  .mini-cases{margin-top:18px; display:flex; flex-direction:column; gap:10px;}
+  .mini-case{
+    font-size:13.5px; line-height:1.6; color:var(--paper-dim);
+    padding:12px 14px; border:1px solid var(--line); border-radius:var(--radius);
+  }
+  .mini-case b{color:var(--paper); font-weight:500;}
+
+  /* footer / contact repeat */
+  footer{padding:52px 0 60px 0; border-top:1px solid var(--line);}
+  footer p{font-size:15px; line-height:1.7; color:var(--paper-dim); max-width:520px; margin:0 0 26px 0;}
+  footer .name-small{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--paper-dim); margin-top:40px;}
+
+  @media (max-width:520px){
+    .wrap{padding:0 18px;}
+    section{padding:40px 0;}
+    .flow-step{font-size:11.5px; padding:6px 10px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<div class="wrap">
+
+  <!-- HERO / ЭКРАН ПОСЛЕ СКАНА -->
+  <section class="hero" style="border-top:none;">
+    <div class="tag-row"><span class="tag-dot"></span> контакт · конференция «нейросети в бизнесе»</div>
+
+    <h1 class="name">Олег Клименко</h1>
+    <p class="role">Генеральный директор <b>«Планета ZOO»</b> · практик AI-систем для бизнеса</p>
+
+    <h2 class="headline">Превращаю бизнес-задачи в AI-системы, которые можно встроить в реальную работу</h2>
+    <p class="lede">Руковожу действующей розничной сетью и на её реальных задачах проектирую AI-ассистентов, аналитику и автоматизацию — там, где сегодня много ручной интеллектуальной работы, данных и повторяющихся решений.</p>
+
+    <div class="flow">
+      <span class="flow-step">данные</span><span class="flow-arrow">→</span>
+      <span class="flow-step">правила</span><span class="flow-arrow">→</span>
+      <span class="flow-step">AI</span><span class="flow-arrow">→</span>
+      <span class="flow-step">проверка</span><span class="flow-arrow">→</span>
+      <span class="flow-step">решение человека</span>
+    </div>
+
+    <div class="cta-box">
+      <p>Мы могли только что познакомиться на конференции. <b>Сохраните контакт.</b> А если у вас есть процесс, который хочется попробовать переделать с помощью AI — расскажите мне о нём.</p>
+    </div>
+
+    <div class="contacts">
+      <a class="btn" href="https://t.me/OlegK1imenk0" target="_blank" rel="noopener">Telegram →</a>
+      <a class="btn ghost" href="#cases">Кейсы и цифры ↓</a>
+    </div>
+
+    <div class="scroll-hint">
+      <svg width="10" height="14" viewBox="0 0 10 14" fill="none"><path d="M5 0V13M5 13L1 9M5 13L9 9" stroke="currentColor" stroke-width="1.2"/></svg>
+      ниже — с чем ко мне подходить и что я уже делал
+    </div>
+  </section>
+
+  <!-- С ЧЕМ ПОДОЙТИ -->
+  <section>
+    <p class="eyebrow">С чем ко мне можно подойти</p>
+    <h2 class="stitle">Подойдите, если...</h2>
+    <ul class="approach-list">
+      <li><span class="num">01</span><span>...у вас сотрудники уже пользуются ChatGPT или любой другой LLM, но это пока набор личных приёмов, а не система компании.</span></li>
+      <li><span class="num">02</span><span>...есть процесс, где человек постоянно открывает несколько файлов, сравнивает данные и вручную формирует один и тот же тип вывода.</span></li>
+      <li><span class="num">03</span><span>...вы думаете о внутреннем AI-ассистенте, но пока непонятно, что именно ему передать и как встроить в работу людей.</span></li>
+      <li><span class="num">04</span><span>...есть идея AI-агента или продукта, и хочется сначала проверить её на простом MVP, а не сразу уходить в большую разработку.</span></li>
+      <li><span class="num">05</span><span>...хотите понять не «что ещё умеют нейросети», а какую конкретную часть вашего бизнеса уже имеет смысл перестроить вокруг AI.</span></li>
+    </ul>
+  </section>
+
+  <!-- КЕЙСЫ -->
+  <section id="cases">
+    <p class="eyebrow">Кейсы</p>
+    <h2 class="stitle">Проверено на реальных задачах</h2>
+
+    <div class="case" id="case1">
+      <div class="case-head" onclick="toggleCase('case1')">
+        <div><span class="case-idx">01</span><span class="case-title">Защита выручки при чистке ассортиментной матрицы</span></div>
+        <span class="case-toggle">+</span>
+      </div>
+      <div class="case-body">
+        <p>При выводе товаров из матрицы можно случайно удалить SKU, важный для конкретных топ-клиентов магазина.</p>
+        <div class="case-flow">продажи клиентов + матрица + номенклатура<br>→ сопоставление SKU и штрихкодов<br>→ бизнес-правила<br>→ статус и рекомендация менеджеру</div>
+        <p>Тест по одному магазину:</p>
+        <div class="stat-grid">
+          <div class="stat"><b>2 935</b><span>строк продаж</span></div>
+          <div class="stat"><b>10</b><span>топ-карт</span></div>
+          <div class="stat"><b>658</b><span>чеков</span></div>
+          <div class="stat"><b>737</b><span>уникальных SKU</span></div>
+          <div class="stat"><b>1,5 млн ₽</b><span>покупок в анализе</span></div>
+        </div>
+        <p class="case-stage">Стадия: рабочий алгоритм проверен на нескольких магазинах. Финальное решение — за менеджером.</p>
+      </div>
+    </div>
+
+    <div class="case" id="case2">
+      <div class="case-head" onclick="toggleCase('case2')">
+        <div><span class="case-idx">02</span><span class="case-title">Модель дифференцированной наценки для сети</span></div>
+        <span class="case-toggle">+</span>
+      </div>
+      <div class="case-body">
+        <p>Изменение цен по сети требует одновременно учитывать товар, магазин, текущую цену, товарную группу и бизнес-правила.</p>
+        <div class="case-flow">нормализация исходных данных<br>→ связка товаров и цен<br>→ управляемая модель изменения наценки</div>
+        <div class="stat-grid">
+          <div class="stat"><b>7 274</b><span>строки расчёта</span></div>
+          <div class="stat"><b>1 037</b><span>физических SKU</span></div>
+          <div class="stat"><b>10</b><span>магазинов</span></div>
+          <div class="stat"><b>5 472</b><span>цены подтверждены</span></div>
+          <div class="stat"><b>0</b><span>неразрешённых конфликтов</span></div>
+        </div>
+        <p class="case-stage">Стадия: техническая версия готова, модель проходит бизнес-проверку.</p>
+      </div>
+    </div>
+
+    <div class="mini-cases">
+      <div class="mini-case"><b>AI-бот мониторинга отзывов о работодателе.</b> Сбор → удаление дублей → анализ темы и тональности → сравнение с историей → короткий управленческий отчёт. Сценарий протестирован, проект перед этапом кодирования.</div>
+      <div class="mini-case"><b>AI-менеджер жизненного цикла договора.</b> AI ведёт единый реестр условий, отделяет принятые решения от открытых вопросов и после каждой версии документа оценивает, что мешает перейти к готовому договору. Используется как рабочий процесс.</div>
+    </div>
+  </section>
+
+  <!-- КТО Я -->
+  <section>
+    <p class="eyebrow">Кто я</p>
+    <div class="bio">
+      <p>15 лет в зооритейле. Сегодня руковожу розничной сетью. Поэтому AI для меня — не отдельная технологическая тема, а рабочий слой управления бизнесом: там, где есть данные, ассортимент, цены, маркетинг, сотрудники и ответственность за решение.</p>
+      <p>Проектирую ассистентов, системы инструкций и аналитические процессы, проверяю их на реальных задачах — и оставляю человеку финальное управленческое решение.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p class="eyebrow" style="margin-bottom:12px;">Контакт</p>
+    <p>Если у вас есть конкретная бизнес-задача — расскажите её мне. Мне интереснее обсуждать AI не в теории, а на примере реального процесса: что в нём можно изменить, что передать машине, а что оставить человеку.</p>
+    <div class="contacts">
+      <a class="btn" href="https://t.me/OlegK1imenk0" target="_blank" rel="noopener">Telegram →</a>
+    </div>
+    <p class="name-small">Олег Клименко · «Планета ZOO»</p>
+  </footer>
+
+</div>
+
+<script>
+function toggleCase(id){
+  var el = document.getElementById(id);
+  var wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.case.open').forEach(function(c){
+    c.classList.remove('open');
+    c.querySelector('.case-body').style.maxHeight = null;
+  });
+  if(!wasOpen){
+    el.classList.add('open');
+    var body = el.querySelector('.case-body');
+    body.style.maxHeight = body.scrollHeight + 60 + 'px';
+  }
+}
+</script>
+
+</body>
+</html>
